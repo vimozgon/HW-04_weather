@@ -1,6 +1,6 @@
 {
-  "name": "SkillFactory_F1",
-  "homepage": "https://github.com/vimozgon/HW-04__weather#readme",
+  "name": "HW-04_weather",
+  "homepage": "https://github.com/seivse/moduleF1_homework#readme",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -13,9 +13,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+github.com:vimozgon/HW-04__weather.git"
+    "url": "git+https://github.com/vimozgon/HW-04_weather.git"
   },
-
+  "keywords": [],
+  "author": "Git_Vim",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vimozgon/HW-04_weather/issues"
+  },
   "devDependencies": {
     "@babel/core": "^7.18.2",
     "@babel/preset-env": "^7.18.2",
@@ -35,7 +40,7 @@
     "ts-loader": "^9.3.0",
     "typescript": "^4.7.3",
     "webpack": "^5.72.1",
-    "webpack-cli": "^4.9.2",
+    "webpack-cli": "^4.10.0",
     "webpack-dev-server": "^4.9.0",
     "webpack-notifier": "^1.15.0"
   }

@@ -3,14 +3,14 @@ import "../styles/Main.css";
 import  {useState, useEffect} from "react";
 import axios from "axios";
 import Current from "./Current_weather";
-import Week from "./Week_weather";
+import Week from "./Fivedays_weather";
 
 function Main() {
     const [isLoading, setLoading] = useState(true);  // Флаг готовности результата axios
-    const [city, setCity] = useState('Москва'); // отслеживаем изменение города
-    const [lat, setLat] = useState(55.7522); // отслеживаем изменение текущих координат, по умолчанию - Москва
-    const [lon, setLon] = useState(37.6156);
-    const [widget, setWidget] = useState('current'); // Отслеживаем какой виджет (компонент) показывать
+    const [city, setCity] = useState('Краснодар'); // следим за выбранным городом
+    const [lat, setLat] = useState(46.3497); // отслеживаем изменение текущих координат, по умолчанию - Краснодар
+    const [lon, setLon] = useState(48.0408);
+    const [widget, setWidget] = useState('current'); // Какой виджет (компонент) показывать
     const [current, setCurrent] = useState([]);
     const [feels_like, setFeels_like] = useState([]);
     const [temp, setTemp] = useState([]);
@@ -20,13 +20,13 @@ function Main() {
     const [pict, setIcon] = useState('03n');
     const [key_ipgeolocation, setKey1] = useState();
     const [key_openweathermap, setKey2] = useState();
-    const citilist = ['Москва', 'Санкт-Петербург', 'Новосибирск', 'Екатеринбург', 'Челябинск', 'Ростов-на-Дону', 'Уфа', 'Омск', 'Красноярск'];
+    const citilist = ['Краснодар', 'Владивосток', 'Калинград', 'Ростов-На-Дону', 'Санкт-Петербург', 'Анадырь'];
     // Наполняем содержимое select
     const options = citilist.map((text, index) => {
         return <option key={index}>{text}</option>;
     });
 
-    // Получаем ключи с моего ресурса
+    // Get Keys
     useEffect(() => {
         axios.get(`https://home-update.ru/api/ipgeolocation`).then(res => {
             setKey1(res.data[0].key);
@@ -64,7 +64,7 @@ function Main() {
                 console.log('координаты выбранного города', res.data[0].lat, res.data[0].lon)
             });
         };
-        // Получаем данные о погоде на «сейчас»; «ближайшие два дня» (почасово на двое суток); «на этой неделе» (следующие семь дней).
+        // Получаем данные о погоде на «сейчас»; «ближайшие пять дней» (следующие пять дней).
         if (key_openweathermap !== undefined) {
             axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${key_openweathermap}&units=metric`).then(res => {
                 setCurrent(res.data.current);
@@ -91,15 +91,14 @@ function Main() {
             <div className="cover">
 
                 <div className='button'>
-                    <button onClick={getMyPosition}>Найти меня</button>
+                    <button onClick={getMyPosition}>Locate Me</button>
                     <select value={city} onChange={e=>setCity(e.target.value)}>
                         <option disabled>Выберите город</option>
                         {options}
                     </select>
 
-                    <button onClick={e=>setWidget("current")}>Сегодня</button>
-                    <button onClick={e=>setWidget("48hours")}>На 48 часов</button>
-                    <button onClick={e=>setWidget("week")}>На неделю</button>
+                    <button onClick={e=>setWidget("current")}>Сейчас</button>
+                    <button onClick={e=>setWidget("fivedays")}>На 5 дней</button>
                 </div>
 
                 {(widget === "current" && key_openweathermap !== undefined ) &&
@@ -109,13 +108,11 @@ function Main() {
                     </div>
                 }
 
-                
-
-                {widget === "week" &&
+                {widget === "fivedays" &&
                     <div>
                         <div className="city">{city}</div>
                         <div className="widgets">
-                            {week.map((value,index) =>
+                            {week.slice(0,5).map((value,index) =>
                                 <Week day={index} temp={value.temp.day} icon={value.weather[0].icon} key={value.dt}/>
                             )}
                         </div>
