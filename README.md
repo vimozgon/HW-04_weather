@@ -11,7 +11,7 @@
 
 
 ## Установка и запуск среды разработки React + Webpack
-Клонировать репозиторий `git clone https://github.com/aerastov/SkillFactory_F1.git`  
+Клонировать репозиторий `git clone https://github.com/vimozgon/HW-04_weather.git`  
 В консоли перейти в папку проекта
 Восстановить модули: `npm install`   
 Запуск СЕРВЕРА DevServer: `npm run start`  
